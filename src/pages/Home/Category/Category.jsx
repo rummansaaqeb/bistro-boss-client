@@ -20,12 +20,12 @@ const Category = () => {
             <Swiper
                 slidesPerView={4}
                 spaceBetween={30}
-                centeredSlides={true}
+                centeredSlides={false}
                 pagination={{
                     clickable: true,
                 }}
                 modules={[Pagination]}
-                className="mySwiper mb-24"
+                className="mySwiper mb-32"
             >
                 <SwiperSlide>
                     <img src={slide1} alt="" />
@@ -43,7 +43,7 @@ const Category = () => {
                     <img src={slide4} alt="" />
                     <h3 className='text-4xl uppercase text-center -mt-16 text-white'>Desserts</h3>
                 </SwiperSlide>
-                <SwiperSlide>
+                <SwiperSlide className='mb-24'>
                     <img src={slide5} alt="" />
                     <h3 className='text-4xl uppercase text-center -mt-16 text-white'>Salads</h3>
                 </SwiperSlide>
