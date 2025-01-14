@@ -1,19 +1,20 @@
 
 const FoodCard = ({ item }) => {
-    
+
     const { name, recipe, image, price } = item;
 
     return (
-        <div className="card bg-base-200 w-4/12 shadow-xl rounded-none">
+        <div className="card bg-base-200 w-96 shadow-xl rounded-none">
             <figure className="">
                 <img
-                    src=''
+                    src={image}
                     alt="Shoes"
                     className="rounded-none w-full object-cover h-[300px]" />
             </figure>
+            <p className="bg-slate-900 text-white absolute right-0 mr-4 mt-4 px-3 py-1">${price}</p>
             <div className="card-body items-center text-center">
-                <h2 className="card-title">Caeser Salad</h2>
-                <p>Lettuce, Eggs, Parmesan Cheese, Chicken Breast Fillets</p>
+                <h2 className="card-title">{name}</h2>
+                <p>{recipe}</p>
                 <div className="card-actions">
                     <button className="btn btn-outline border-0 border-b-4 text-yellow-700 uppercase">Add to cart</button>
                 </div>
