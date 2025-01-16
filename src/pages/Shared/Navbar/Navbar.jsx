@@ -11,6 +11,8 @@ const Navbar = () => {
             .catch(err => console.log(err.message))
     }
 
+    console.log(user);
+
     const navOptions = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/menu'>Our Menu</Link></li>
@@ -54,6 +56,7 @@ const Navbar = () => {
                     {
                         user ?
                             <>
+                            <span>{user?.displayName}</span>
                                 <button onClick={handleLogout} className="btn btn-ghost">Logout</button>
                             </>
                             :
