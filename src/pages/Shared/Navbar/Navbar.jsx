@@ -55,10 +55,10 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <button className="btn mr-5">
+                    <Link to='/dashboard/cart' className="btn mr-5">
                         <FaShoppingCart className="w-5 h-5" />
                         <div className="badge badge-secondary">{cart?.length}</div>
-                    </button>
+                    </Link>
                     {
                         user ?
                             <>
