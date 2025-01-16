@@ -2,6 +2,7 @@ import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useCart from "../../hooks/useCart";
 
 
 const FoodCard = ({ item }) => {
@@ -11,10 +12,11 @@ const FoodCard = ({ item }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const axiosSecure = useAxiosSecure();
+    const [, refetch] = useCart();
 
-    const handleAddToCart = (food) => {
+    const handleAddToCart = () => {
         if (user && user.email) {
-            console.log(user.email, food);
+            // console.log(user.email, food);
             const cartItem = {
                 menuId: _id,
                 email: user.email,
@@ -24,17 +26,19 @@ const FoodCard = ({ item }) => {
             }
 
             axiosSecure.post('/carts', cartItem)
-            .then(res => {
-                if(res.data.insertedId) {
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: `${name} added to cart successfully`,
-                        showConfirmButton: false,
-                        timer: 1500
-                      });
-                }
-            })
+                .then(res => {
+                    if (res.data.insertedId) {
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: `${name} added to cart successfully`,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        // refetch the card to update the card items count
+                        refetch();
+                    }
+                })
         }
         else {
             Swal.fire({
@@ -47,7 +51,7 @@ const FoodCard = ({ item }) => {
                 confirmButtonText: "Yes, Login!"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    navigate('/login', {state: {from: location}});
+                    navigate('/login', { state: { from: location } });
                 }
             });
         }
@@ -67,7 +71,7 @@ const FoodCard = ({ item }) => {
                 <p>{recipe}</p>
                 <div className="card-actions">
                     <button
-                        onClick={() => handleAddToCart(item)}
+                        onClick={handleAddToCart}
                         className="btn btn-outline border-0 border-b-4 text-yellow-700 uppercase">Add to cart</button>
                 </div>
             </div>
