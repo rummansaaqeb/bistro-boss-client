@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 
 const SignUp = () => {
@@ -11,23 +12,32 @@ const SignUp = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const { createUser, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
+    const axiosPublic = useAxiosPublic();
 
     const onSubmit = data => {
-        console.log(data);
         createUser(data.email, data.password)
             .then(result => {
                 const loggedUser = result.user;
-                console.log(loggedUser);
                 updateUserProfile(data.name, data.photoURL)
                     .then(() => {
-                        console.log('User profile info updated');
-                        reset();
-                        Swal.fire({
-                            title: "Registered Successfully!",
-                            text: "Youre Account Has Been Registered Successfully",
-                            icon: "success"
-                        });
-                        navigate('/');
+                        // create user entry in the database
+                        const userInfo = {
+                            name: data.name,
+                            email: data.email
+                        }
+                        axiosPublic.post('/users', userInfo)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    reset();
+                                    Swal.fire({
+                                        title: "Registered Successfully!",
+                                        text: "Youre Account Has Been Registered Successfully",
+                                        icon: "success"
+                                    });
+                                    navigate('/');
+                                }
+                            })
+
                     })
                     .catch(error => console.log(error.message))
             })
