@@ -35,13 +35,13 @@ const UpdateItem = () => {
             };
             const menuRes = await axiosSecure.patch(`/menu/${_id}`, menuItem)
             console.log(menuRes.data);
-            if (menuRes.data.insertedId) {
+            if (menuRes.data.modifiedCount > 0) {
                 Swal.fire({
-                    title: "Item Added Successfully!",
+                    title: "Item Updated Successfully!",
                     text: ` ${data.name} Is Updated On The Menu Now`,
                     icon: "success"
                 });
-                reset();
+                // reset();
             }
         }
         console.log('with image url', res.data);
